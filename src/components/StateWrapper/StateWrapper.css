@@ -1,0 +1,15 @@
+.two-column {
+    display: flex;
+    flex-grow: 1;
+}
+
+.two-column__left {
+    flex: 0 0 20rem;
+    background-color: black;
+    border-right: 1px dotted #777;
+}
+
+.two-column__right {
+    background-color: black;
+    flex-grow: 1;
+}

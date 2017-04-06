@@ -1,0 +1,9 @@
+.titlebar {
+    display: flex;
+    justify-content: space-between;
+    height: 3rem;
+    background-color: black;
+    border-bottom: 1px dotted #777;
+    padding: 0 1rem;
+    -webkit-app-region: drag;
+}

@@ -1,0 +1,39 @@
+.sidebar-panel {
+    border-bottom: 1px dotted #777;
+    color: #aaa;
+}
+
+.sidebar-panel__heading {
+    height: 4rem;
+    line-height: 4rem;
+    padding: 0 1rem;
+    text-transform: uppercase;
+    color: #aaa;
+    cursor: pointer;
+}
+.sidebar-panel__heading:active {
+    background-color: #aaa;
+    color: black;
+}
+
+.slide-down-enter {
+    opacity: 0;
+    transform: translateX( -1rem );
+}
+
+.slide-down-enter.slide-down-enter-active {
+    opacity: 1;
+    transform: translateX( 0 );
+    transition: all 500ms ease-out;
+}
+
+.slide-down-leave {
+    opacity: 1;
+    transform: translateX( 0 );
+}
+
+.slide-down-leave.slide-down-leave-active {
+    opacity: 0;
+    transform: translateX( -1rem );
+    transition: all 500ms ease-out;
+}

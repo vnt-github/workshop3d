@@ -1,0 +1,8 @@
+.titlebar-button {
+    display: block;
+    height: 3rem;
+    width: 1rem;
+    padding: 1rem 0;
+    cursor: pointer;
+    -webkit-app-region: no-drag;
+}

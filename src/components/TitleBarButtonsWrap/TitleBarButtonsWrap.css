@@ -1,0 +1,5 @@
+.titlebar-buttons-wrap {
+    display: flex;
+    justify-content: space-between;
+    width: 6rem;
+}
