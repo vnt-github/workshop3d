@@ -1,12 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 
-import SidebarButton from '../SidebarButton/SidebarButton';
+import AddPanel from '../AddPanel/AddPanel';
+import ObjectPanel from '../ObjectPanel/ObjectPanel';
 
 class Sidebar extends Component {
     render() {
         return (
             <div>
-                <SidebarButton text="Add" handleClick={this.props.callbacks.handleMeshAdd} />
+                <AddPanel />
+                <ObjectPanel appState={this.props.appState} />
             </div>
         );
     }

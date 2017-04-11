@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 import * as THREE from 'three';
 
 import Sidebar from '../Sidebar/Sidebar';
-import Renderer from '../Renderer/Renderer';
+import AddGeometryView from '../AddGeometryView/AddGeometryView';
+import AddBoxGeometryView from '../AddBoxGeometryView/AddBoxGeometryView';
+import AddMaterialView from '../AddMaterialView/AddMaterialView';
+import AddBasicMaterialView from '../AddBasicMaterialView/AddBasicMaterialView';
+import AddShaderMaterialView from '../AddShaderMaterialView/AddShaderMaterialView';
+import AddMeshView from '../AddMeshView/AddMeshView';
 
 import './StateWrapper.css';
 
@@ -10,12 +16,17 @@ class StateWrapper extends Component {
     constructor(props) {
         super(props);
 
+        let initialGeometry = new THREE.BoxGeometry(10, 10, 10);
+        initialGeometry.name = 'Geometry1';
+        let initialMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
+        initialMaterial.name = 'Material1';
+
         this.state = {
             geometries: [
-                { id: Date.now(), name: 'Geometry1', geometry: new THREE.BoxGeometry(20, 20, 20) }
+                initialGeometry
             ],
             materials: [
-                { id: Date.now(), name: 'Material1', material: new THREE.MeshBasicMaterial({ color: 0x000000 }) }
+                initialMaterial
             ],
             meshes: [],
             update: {
@@ -24,25 +35,24 @@ class StateWrapper extends Component {
                 id: null
             }
         };
-
-        this.handleMeshAdd = this.handleMeshAdd.bind(this);
     }
 
-    handleMeshAdd() {
-        let newMeshes = [...this.state.meshes];
-        const id = Date.now();
-        newMeshes.push({
-            id: id,
-            name: 'Mesh1',
-            geometry: this.state.geometries[0].id,
-            material: this.state.materials[0].id
-        });
-        this.setState({ meshes: newMeshes, update: { type: 'add', object: 'mesh', id: id } });
+    handleGeometryAdd(geometry) {
+        let geometries = [...this.state.geometries];
+        geometries.push(geometry);
+        this.setState({ geometries: geometries });
+    }
+
+    handleMaterialAdd(material) {
+        let materials = [...this.state.materials];
+        materials.push(material);
+        this.setState({ materials: materials });
     }
 
     render() {
         const callbacks = {
-            handleMeshAdd: this.handleMeshAdd
+            handleGeometryAdd: this.handleGeometryAdd.bind(this),
+            handleMaterialAdd: this.handleMaterialAdd.bind(this)
         };
 
         return (
@@ -51,7 +61,12 @@ class StateWrapper extends Component {
                     <Sidebar appState={this.state} callbacks={callbacks} />
                 </section>
                 <section className="two-column__right">
-                    <Renderer appState={this.state} />
+                    <Route exact path="/add/geometry" component={AddGeometryView} />
+                    <Route path="/add/geometry/box" component={() => <AddBoxGeometryView callbacks={callbacks} />} />
+                    <Route exact path="/add/material" component={AddMaterialView} />
+                    <Route path="/add/material/basic" component={() => <AddBasicMaterialView callbacks={callbacks} />} />
+                    <Route path="/add/material/shader" component={AddShaderMaterialView} />
+                    <Route path="/add/mesh" component={AddMeshView} />
                 </section>
             </div>
         );

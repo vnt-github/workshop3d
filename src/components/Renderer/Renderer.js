@@ -36,24 +36,24 @@ class Renderer extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        let update = nextProps.appState.update;
-        if (update.type === 'add' && update.object === 'mesh') {
-            let stateMesh = nextProps.appState.meshes.find((mesh) => mesh.id === update.id);
-            let geometry = nextProps.appState.geometries.find((geometry) => geometry.id === stateMesh.geometry).geometry;
-            let material1 = new THREE.MeshBasicMaterial({
-                color: 0xcccccc,
-                polygonOffset: true,
-                polygonOffsetFactor: 1,
-                polygonOffsetUnits: 1
-            });
-            let mesh = new THREE.Mesh(geometry, material1);
-            this.scene.add(mesh);
-            let wireframeGeometry = new THREE.EdgesGeometry(mesh.geometry);
-            let material2 = new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 1 });
-            let wireframe = new THREE.LineSegments(wireframeGeometry, material2);
-            mesh.add(wireframe);
-            this.renderScene();
-        }
+        // let update = nextProps.appState.update;
+        // if (update.type === 'add' && update.object === 'mesh') {
+        //     let stateMesh = nextProps.appState.meshes.find((mesh) => mesh.id === update.id);
+        //     let geometry = nextProps.appState.geometries.find((geometry) => geometry.id === stateMesh.geometry).geometry;
+        //     let material1 = new THREE.MeshBasicMaterial({
+        //         color: 0xcccccc,
+        //         polygonOffset: true,
+        //         polygonOffsetFactor: 1,
+        //         polygonOffsetUnits: 1
+        //     });
+        //     let mesh = new THREE.Mesh(geometry, material1);
+        //     this.scene.add(mesh);
+        //     let wireframeGeometry = new THREE.EdgesGeometry(mesh.geometry);
+        //     let material2 = new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 1 });
+        //     let wireframe = new THREE.LineSegments(wireframeGeometry, material2);
+        //     mesh.add(wireframe);
+        //     this.renderScene();
+        // }
     }
 
     handleResize() {

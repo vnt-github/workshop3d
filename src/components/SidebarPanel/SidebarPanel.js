@@ -26,7 +26,7 @@ class SidebarPanel extends Component {
                 <div className="sidebar-panel__heading" onClick={this.toggleOpen}>
                     {this.props.heading}
                 </div>
-                <ReactCSSTransitionGroup transitionName="slide-down"
+                <ReactCSSTransitionGroup transitionName="slide"
                                          transitionEnterTimeout={500}
                                          transitionLeaveTimeout={500} >
                     {panelContents}

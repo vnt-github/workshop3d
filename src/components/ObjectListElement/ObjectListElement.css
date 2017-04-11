@@ -1,0 +1,11 @@
+.object-list__heading {
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    cursor: pointer;
+}
+
+.object-list__list li {
+    margin-bottom: 1rem;
+    margin-left: 2rem;
+    cursor: pointer;
+}
