@@ -1,7 +1,7 @@
 .titlebar {
     display: flex;
+    flex: 0 0 3rem;
     justify-content: space-between;
-    height: 3rem;
     background-color: black;
     border-bottom: 1px dotted #777;
     padding: 0 1rem;

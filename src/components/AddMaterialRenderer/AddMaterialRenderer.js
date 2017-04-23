@@ -39,11 +39,16 @@ class AddMaterialRenderer extends Component {
         this.mesh = new THREE.Mesh(this.geometry, this.material);
         this.scene.add(this.mesh);
 
+        this.light = new THREE.PointLight(0xffffff);
+        this.camera.add(this.light);
+        this.scene.add(this.camera);
+
         this.animate();
     }
 
     componentWillUnmount() {
         this.animating = false;
+        this.controls.enabled = false;
     }
 
     renderScene() {

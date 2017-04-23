@@ -30,7 +30,7 @@ class AddGeometryRenderer extends Component {
         this.controls.addEventListener('change', this.renderScene);
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
         this.renderer.setSize(12 * 20, 12 * 20);
-        this.renderer.setClearColor(0x0000);
+        this.renderer.setClearColor(0x000000);
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.wrapper.appendChild(this.renderer.domElement);
 
@@ -52,6 +52,7 @@ class AddGeometryRenderer extends Component {
 
     componentWillUnmount() {
         this.animating = false;
+        this.controls.enabled = false;
     }
 
     renderScene() {

@@ -3,3 +3,8 @@
     line-height: 1.5;
     height: 100%;
 }
+
+.add-shader-material-view {
+    height: 100%;
+    overflow: auto;
+}

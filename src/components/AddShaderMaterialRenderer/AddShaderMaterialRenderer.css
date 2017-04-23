@@ -1,0 +1,37 @@
+.add-shader-renderer__wrapper {
+    position: fixed;
+    top: 3rem;
+    right: 0;
+    width: 20rem;
+    height: 20rem;
+    background-color: red;
+    z-index: 10;
+}
+
+
+.add-shader-material__button {
+    position: fixed;
+    bottom: 1rem;
+    left: 21rem;
+    z-index: 10;
+    font-size: 1.25em;
+}
+
+.add-shader-material__name {
+    position: fixed;
+    bottom: 1rem;
+    left: 30rem;
+    color: #ccc;
+    font-size: 1.25em;
+    z-index: 10;
+}
+
+.add-shader-material__name input {
+    background-color: #222;
+    font: inherit;
+    padding: .5rem;
+    outline: none;
+    border: none;
+    margin-left: 1rem;
+    color: #ccc;
+}

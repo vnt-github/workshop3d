@@ -16,3 +16,13 @@ a {
 input[type='checkbox'] {
     vertical-align: middle;
 }
+
+*::-webkit-scrollbar {
+    width: 1rem;
+}
+*::-webkit-scrollbar-track {
+    background-color: black;
+}
+*::-webkit-scrollbar-thumb {
+    background-color: #444;
+}
