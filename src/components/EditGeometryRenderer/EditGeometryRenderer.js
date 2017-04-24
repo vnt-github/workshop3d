@@ -2,17 +2,19 @@ import React, { Component, PropTypes } from 'react';
 import * as THREE from 'three';
 import TrackballControls from '../../utils/controls/TrackballControls.js';
 
-import './SceneRenderer.css';
+import './EditGeometryRenderer.css';
 
-class SceneRenderer extends Component {
-    constructor(props) {
-        super(props);
+class EditGeometryRenderer extends Component {
+    constructor() {
+        super();
 
         this.animating = true;
 
         this.renderScene = this.renderScene.bind(this);
         this.animate = this.animate.bind(this);
         this.onWindowResize = this.onWindowResize.bind(this);
+        this.updateWireframe = this.updateWireframe.bind(this);
+        this.getMousePosition = this.getMousePosition.bind(this);
     }
 
     componentDidMount() {
@@ -39,13 +41,31 @@ class SceneRenderer extends Component {
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.refs.wrapper.appendChild(this.renderer.domElement);
 
+        this.geometry = this.props.appState.geometries.find((geometry) => {
+            return geometry.uuid === this.props.appState.active.id;
+        });
+        this.geometry = this.geometry.clone();
+        this.material = new THREE.MeshBasicMaterial({
+            color: 0xcccccc,
+            polygonOffset: true,
+            polygonOffsetFactor: 1,
+            polygonOffsetUnits: 1,
+            side: THREE.DoubleSide
+        });
+        // this.wireframeMaterial = new THREE.LineBasicMaterial({ color: 0x777777, linewidth: 1 });
+        this.wireframeMaterial = new THREE.MeshBasicMaterial({ color: 0x777777, wireframe: true });
+        this.mesh = new THREE.Mesh(this.geometry, this.material);
+        this.updateWireframe();
+        this.scene.add(this.mesh);
+        this.objects = [this.mesh];
+
         const gridHelper = new THREE.GridHelper(10, 10, 0x884444);
         this.scene.add(gridHelper);
 
-        this.props.appState.meshes.forEach((mesh) => {
-            this.scene.add(mesh);
-        });
-        
+        this.raycaster = new THREE.Raycaster();
+        this.mouse = { };
+        window.addEventListener('mousemove', this.getMousePosition, false);
+
         window.addEventListener('resize', this.onWindowResize, false);
 
         this.animate();
@@ -55,6 +75,18 @@ class SceneRenderer extends Component {
         this.animating = false;
         this.controls.enabled = false;
         window.removeEventListener('resize', this.onWindowResize, false);
+        window.removeEventListener('mousemove', this.getMousePosition, false);
+    }
+
+    updateWireframe() {
+        // this.wireframeGeometry = new THREE.EdgesGeometry( this.geometry );
+        this.wireframeGeometry = this.geometry;
+        if (this.wireframe) {
+            this.mesh.remove(this.wireframe);
+        }
+        // this.wireframe = new THREE.LineSegments(this.wireframeGeometry, this.wireframeMaterial);
+        this.wireframe = new THREE.Mesh(this.wireframeGeometry, this.wireframeMaterial);
+        this.mesh.add(this.wireframe);
     }
 
     onWindowResize() {
@@ -77,15 +109,20 @@ class SceneRenderer extends Component {
         }
     }
 
+    getMousePosition(event) {
+        this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        this.mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+    }
+
     render() {
         return (
-            <div ref="wrapper" className="scene-renderer__wrapper"></div>
+            <div ref="wrapper" className="edit-geometry-renderer__wrapper"></div>
         );
     }
 }
 
-SceneRenderer.propTypes = {
+EditGeometryRenderer.propTypes = {
     appState: PropTypes.object.isRequired
 };
 
-export default SceneRenderer;
+export default EditGeometryRenderer;

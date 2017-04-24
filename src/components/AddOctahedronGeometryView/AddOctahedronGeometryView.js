@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router-dom';
 import * as THREE from 'three';
 
 import ViewContainer from '../ViewContainer/ViewContainer';
@@ -56,7 +57,7 @@ class AddOctahedronGeometryView extends Component {
                     <input type="number" defaultValue="0" onChange={this.onChange.bind(this, 'detail')} />
                 </label>
                 <br />
-                <Button onClick={this.handleAdd}>Add</Button>
+                <Link to="/edit/geometry"><Button onClick={this.handleAdd}>Add</Button></Link>
                 <AddGeometryRenderer geometry={this.state.geometry} />
             </ViewContainer>
         );

@@ -4,8 +4,15 @@ import './SidebarButton.css';
 
 class SidebarButton extends Component {
     render() {
+        let className;
+        if (this.props.className) {
+            className = 'sidebar-button ' + this.props.className;
+        } else {
+            className = 'sidebar-button';
+        }
+
         return (
-            <div className="sidebar-button" onClick={this.props.handleClick}>
+            <div className={className} onClick={this.props.handleClick}>
                 {this.props.text}
             </div>
         );
@@ -14,7 +21,8 @@ class SidebarButton extends Component {
 
 SidebarButton.propTypes = {
     text: PropTypes.string.isRequired,
-    handleClick: PropTypes.func
+    handleClick: PropTypes.func,
+    className: PropTypes.string
 };
 
 export default SidebarButton;

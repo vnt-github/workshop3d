@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router-dom';
 import * as THREE from 'three';
 
 import ViewContainer from '../ViewContainer/ViewContainer';
@@ -11,7 +12,7 @@ class AddPlaneGeometryView extends Component {
         super(props);
 
         this.state = {
-            geometry: new THREE.BoxGeometry(1, 1, 1, 1)
+            geometry: new THREE.PlaneGeometry(1, 1, 1, 1)
         };
 
         this.width = 1;
@@ -70,7 +71,7 @@ class AddPlaneGeometryView extends Component {
                     <input type="number" defaultValue="1" onChange={this.onChange.bind(this, 'heightSegments')} />
                 </label>
                 <br />
-                <Button onClick={this.handleAdd}>Add</Button>
+                <Link to="/edit/geometry"><Button onClick={this.handleAdd}>Add</Button></Link>
                 <AddGeometryRenderer geometry={this.state.geometry} />
             </ViewContainer>
         );

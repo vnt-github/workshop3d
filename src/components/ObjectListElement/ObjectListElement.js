@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import './ObjectListElement.css';
@@ -16,6 +17,10 @@ class ObjectListElement extends Component {
         this.setState({ isOpen: !this.state.isOpen });
     }
 
+    handleClickChangeActive(id) {
+        this.props.handleClick(id)
+    }
+
     render() {
         let list;
         if (this.state.isOpen) {
@@ -24,9 +29,19 @@ class ObjectListElement extends Component {
                                                  transitionEnterTimeout={500}
                                                  transitionLeaveTimeout={500} >
                             {this.props.list.map((element) => {
-                                return <li key={element.uuid}>
-                                           {element.name}
+                                let className;
+                                if (element.uuid === this.props.activeId) {
+                                    className = "object-list__active";
+                                }
+                                return (
+                                    <Link key={element.uuid}
+                                          to={this.props.link}
+                                          onClick={this.handleClickChangeActive.bind(this, element.uuid)} >
+                                        <li className={className} >
+                                            {element.name}
                                         </li>
+                                    </Link>
+                                );
                             })}
                         </ReactCSSTransitionGroup>
                     </ul>
@@ -49,7 +64,10 @@ class ObjectListElement extends Component {
 
 ObjectListElement.propTypes = {
     heading: PropTypes.string.isRequired,
-    list: PropTypes.array.isRequired
+    list: PropTypes.array.isRequired,
+    link: PropTypes.string.isRequired,
+    handleClick: PropTypes.func.isRequired,
+    activeId: PropTypes.string
 };
 
 export default ObjectListElement;

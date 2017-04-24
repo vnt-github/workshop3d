@@ -1,11 +1,15 @@
 .object-list__heading {
-    margin-bottom: 1rem;
-    margin-left: 1rem;
+    margin-left: 2rem;
+    margin-bottom: 1.5rem;
     cursor: pointer;
 }
 
 .object-list__list li {
-    margin-bottom: 1rem;
-    margin-left: 2rem;
+    margin-bottom: 1.5rem;
+    margin-left: 4rem;
     cursor: pointer;
+}
+
+.object-list__active {
+    color: #ff679d;
 }

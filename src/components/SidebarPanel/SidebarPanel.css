@@ -1,15 +1,19 @@
 .sidebar-panel {
-    border-bottom: 1px dotted #777;
     color: #aaa;
+    background-color: #222;
+    border-radius: .5rem;
+    overflow: hidden;
+    margin-top: 1rem;
 }
 
 .sidebar-panel__heading {
     height: 4rem;
     line-height: 4rem;
-    padding: 0 1rem;
+    padding: 0 2rem;
     text-transform: uppercase;
     color: #aaa;
     cursor: pointer;
+    background-color: #444;
 }
 .sidebar-panel__heading:active {
     background-color: #aaa;

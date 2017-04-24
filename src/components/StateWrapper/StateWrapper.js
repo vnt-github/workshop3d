@@ -19,6 +19,8 @@ import AddTetrahedronGeometryView from '../AddTetrahedronGeometryView/AddTetrahe
 import AddTorusGeometryView from '../AddTorusGeometryView/AddTorusGeometryView';
 import AddTorusKnotGeometryView from '../AddTorusKnotGeometryView/AddTorusKnotGeometryView';
 
+import EditGeometryRenderer from '../EditGeometryRenderer/EditGeometryRenderer';
+
 import AddMaterialView from '../AddMaterialView/AddMaterialView';
 import AddBasicMaterialView from '../AddBasicMaterialView/AddBasicMaterialView';
 import AddLambertMaterialView from '../AddLambertMaterialView/AddLambertMaterialView';
@@ -35,7 +37,7 @@ class StateWrapper extends Component {
     constructor(props) {
         super(props);
 
-        let initialGeometry = new THREE.BoxGeometry(10, 10, 10);
+        let initialGeometry = new THREE.BoxGeometry(1, 1, 1);
         initialGeometry.name = 'Geometry1';
         let initialMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
         initialMaterial.name = 'Material1';
@@ -48,18 +50,18 @@ class StateWrapper extends Component {
                 initialMaterial
             ],
             meshes: [],
-            update: {
+            active: {
                 type: null,
-                object: null,
                 id: null
-            }
+            },
+            geometryView: 'vertex'
         };
     }
 
     handleGeometryAdd(geometry) {
         let geometries = [...this.state.geometries];
         geometries.push(geometry);
-        this.setState({ geometries: geometries });
+        this.setState({ geometries: geometries, active: { type: 'geometry', id: geometry.uuid } });
     }
 
     handleMaterialAdd(material) {
@@ -74,11 +76,22 @@ class StateWrapper extends Component {
         this.setState({ meshes: meshes });
     }
 
+    changeActiveObject(type, id) {
+        let newActive = { type, id };
+        this.setState({ active: newActive });
+    }
+
+    changeGeometryView(view) {
+        this.setState({ geometryView: view });
+    }
+
     render() {
         const callbacks = {
             handleGeometryAdd: this.handleGeometryAdd.bind(this),
             handleMaterialAdd: this.handleMaterialAdd.bind(this),
-            handleMeshAdd: this.handleMeshAdd.bind(this)
+            handleMeshAdd: this.handleMeshAdd.bind(this),
+            changeActiveObject: this.changeActiveObject.bind(this),
+            changeGeometryView: this.changeGeometryView.bind(this)
         };
 
         return (
@@ -87,6 +100,7 @@ class StateWrapper extends Component {
                     <Sidebar appState={this.state} callbacks={callbacks} />
                 </section>
                 <section className="two-column__right">
+                    <Route exact path="/" component={() => <SceneRenderer appState={this.state} />} />
                     <Route exact path="/add/geometry" component={AddGeometryView} />
                     <Route path="/add/geometry/box" component={() => <AddBoxGeometryView callbacks={callbacks} />} />
                     <Route path="/add/geometry/circle" component={() => <AddCircleGeometryView callbacks={callbacks} />} />
@@ -101,6 +115,8 @@ class StateWrapper extends Component {
                     <Route path="/add/geometry/tetrahedron" component={() => <AddTetrahedronGeometryView callbacks={callbacks} />} />
                     <Route path="/add/geometry/torus" component={() => <AddTorusGeometryView callbacks={callbacks} />} />
                     <Route path="/add/geometry/torusknot" component={() => <AddTorusKnotGeometryView callbacks={callbacks} />} />
+
+                    <Route path="/edit/geometry" component={() => <EditGeometryRenderer appState={this.state} />} />
 
                     <Route exact path="/add/material" component={AddMaterialView} />
                     <Route path="/add/material/basic" component={() => <AddBasicMaterialView callbacks={callbacks} />} />

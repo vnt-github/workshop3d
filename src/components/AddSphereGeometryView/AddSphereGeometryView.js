@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router-dom';
 import * as THREE from 'three';
 
 import ViewContainer from '../ViewContainer/ViewContainer';
@@ -91,7 +92,7 @@ class AddSphereGeometryView extends Component {
                     <input type="number" defaultValue="3.14" onChange={this.onChange.bind(this, 'thetaLength')} />
                 </label>
                 <br />
-                <Button onClick={this.handleAdd}>Add</Button>
+                <Link to="/edit/geometry"><Button onClick={this.handleAdd}>Add</Button></Link>
                 <AddGeometryRenderer geometry={this.state.geometry} />
             </ViewContainer>
         );

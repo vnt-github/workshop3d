@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router-dom';
 import * as THREE from 'three';
 
 import ViewContainer from '../ViewContainer/ViewContainer';
@@ -55,7 +56,7 @@ class AddMeshView extends Component {
                     </select>
                 </label>
                 <br />
-                <Button onClick={this.handleMeshAdd}>Add</Button>
+                <Link to="/"><Button onClick={this.handleMeshAdd}>Add</Button></Link>
             </ViewContainer>
         );
     }

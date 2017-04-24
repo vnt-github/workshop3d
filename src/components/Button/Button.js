@@ -12,9 +12,9 @@ class Button extends Component {
         }
 
         return (
-            <a className={className} onClick={this.props.onClick}>
+            <div className={className} onClick={this.props.onClick}>
                 {this.props.children}
-            </a>
+            </div>
         );
     }
 }
