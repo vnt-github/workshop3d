@@ -8,7 +8,8 @@ class AddPanel extends Component {
         let list = [
             { id: 0, name: 'Geometry', link: '/add/geometry' },
             { id: 1, name: 'Material', link: '/add/material' },
-            { id: 2, name: 'Mesh', link: '/add/mesh' }
+            { id: 2, name: 'Mesh', link: '/add/mesh' },
+            { id: 3, name: 'Light', link: '/add/light' }
         ];
         return (
             <SidebarPanel heading="Add">

@@ -30,13 +30,13 @@ class ObjectListElement extends Component {
                                                  transitionLeaveTimeout={500} >
                             {this.props.list.map((element) => {
                                 let className;
-                                if (element.uuid === this.props.activeId) {
+                                if (element.id === this.props.activeId) {
                                     className = "object-list__active";
                                 }
                                 return (
-                                    <Link key={element.uuid}
+                                    <Link key={element.id}
                                           to={this.props.link}
-                                          onClick={this.handleClickChangeActive.bind(this, element.uuid)} >
+                                          onClick={this.handleClickChangeActive.bind(this, element.id)} >
                                         <li className={className} >
                                             {element.name}
                                         </li>

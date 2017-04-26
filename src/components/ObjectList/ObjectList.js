@@ -33,6 +33,13 @@ class ObjectList extends Component {
                                        activeId={this.props.appState.active.id}
                                        handleClick={this.handleChangeActiveObject.bind(this, 'mesh')} />
                 </li>
+                <li>
+                    <ObjectListElement heading="Lights"
+                                       list={this.props.appState.lights}
+                                       link="/"
+                                       activeId={this.props.appState.active.id}
+                                       handleClick={this.handleChangeActiveObject.bind(this, 'light')} />
+                </li>
             </ul>
         );
     }

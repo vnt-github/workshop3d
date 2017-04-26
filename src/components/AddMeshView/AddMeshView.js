@@ -14,8 +14,8 @@ class AddMeshView extends Component {
     }
 
     handleMeshAdd() {
-        let geometry = this.props.appState.geometries.find((geometry) => geometry.uuid === this.refs.geometry.value);
-        let material = this.props.appState.materials.find((material) => material.uuid === this.refs.material.value);
+        let geometry = this.props.appState3d.geometries.find((geometry) => geometry.uuid === this.refs.geometry.value);
+        let material = this.props.appState3d.materials.find((material) => material.uuid === this.refs.material.value);
         let mesh = new THREE.Mesh(geometry, material);
         mesh.name = this.refs.name.value;
         this.props.callbacks.handleMeshAdd(mesh);
@@ -34,7 +34,7 @@ class AddMeshView extends Component {
                     Geometry
                     <br />
                     <select ref="geometry">
-                        {this.props.appState.geometries.map((geometry) => {
+                        {this.props.appState3d.geometries.map((geometry) => {
                             return <option key={geometry.uuid}
                                            value={geometry.uuid} >
                                        {geometry.name}
@@ -47,7 +47,7 @@ class AddMeshView extends Component {
                     Material
                     <br />
                     <select ref="material">
-                        {this.props.appState.materials.map((material) => {
+                        {this.props.appState3d.materials.map((material) => {
                             return <option key={material.uuid}
                                            value={material.uuid} >
                                        {material.name}
@@ -63,7 +63,7 @@ class AddMeshView extends Component {
 }
 
 AddMeshView.propTypes = {
-    appState: PropTypes.object.isRequired,
+    appState3d: PropTypes.object.isRequired,
     callbacks: PropTypes.object.isRequired
 };
 

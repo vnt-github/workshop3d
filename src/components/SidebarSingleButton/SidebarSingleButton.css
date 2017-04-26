@@ -1,0 +1,17 @@
+.sidebar-single-button {
+    height: 4rem;
+    line-height: 4rem;
+    padding: 0 2rem;
+    text-transform: uppercase;
+    color: #aaa;
+    cursor: pointer;
+    background-color: #444;
+    border-radius: .5rem;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.sidebar-single-button:active {
+    background-color: #aaa;
+    color: black;
+}

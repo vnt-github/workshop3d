@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom';
 import AddPanel from '../AddPanel/AddPanel';
 import ObjectPanel from '../ObjectPanel/ObjectPanel';
 import EditGeometryPanel from '../EditGeometryPanel/EditGeometryPanel';
+import RenderPanel from '../RenderPanel/RenderPanel';
 
 import './Sidebar.css';
 
@@ -18,6 +19,7 @@ class Sidebar extends Component {
                             <EditGeometryPanel appState={this.props.appState}
                                                callbacks={this.props.callbacks} />
                         )} />
+                <RenderPanel />
             </div>
         );
     }

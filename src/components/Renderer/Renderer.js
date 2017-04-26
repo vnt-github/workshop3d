@@ -1,68 +1,62 @@
 import React, { Component, PropTypes } from 'react';
 import * as THREE from 'three';
+import EditorControls from '../../utils/controls/EditorControls';
+
+import Button from '../Button/Button';
 
 import './Renderer.css';
 
 class Renderer extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
 
-        this.handleResize = this.handleResize.bind(this);
+        this.animating = true;
+
         this.renderScene = this.renderScene.bind(this);
         this.animate = this.animate.bind(this);
+        this.onWindowResize = this.onWindowResize.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {
-        this.wrapperElement = document.getElementById('renderer');
         this.scene = new THREE.Scene();
-        this.camera = new THREE.PerspectiveCamera(45,
-                                                  (window.innerWidth - 20*12) / (window.innerHeight - 3*12),
-                                                  0.1,
-                                                  1000);
-        this.camera.position.set(0, 0, 100);
+        this.camera = new THREE.PerspectiveCamera(
+            45,
+            window.innerWidth / window.innerHeight,
+            0.1,
+            1000
+        );
+        this.camera.position.set(0, 5, 10);
         this.camera.lookAt(this.scene.position);
-
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.setClearColor(0x000000);
         this.renderer.setPixelRatio(window.devicePixelRatio);
-        this.renderer.setClearColor(0x222222);
-        this.wrapperElement.appendChild(this.renderer.domElement);
-        this.handleResize();
+        this.refs.wrapper.appendChild(this.renderer.domElement);
+        this.controls = new EditorControls(this.camera, this.renderer.domElement);
 
-        window.addEventListener('resize', this.handleResize, false);
+        this.props.appState3d.lights.forEach((light) => {
+            this.scene.add(light);
+        });
+        this.props.appState3d.meshes.forEach((mesh) => {
+            this.scene.add(mesh);
+        })
+
+        window.addEventListener('resize', this.onWindowResize, false);
+
+        this.animate();
     }
 
     componentWillUnmount() {
-        window.removeEventListener('resize', this.handleResize, false);
+        this.animating = false;
+        this.controls.enabled = false;
+        window.removeEventListener('resize', this.onWindowResize, false);
     }
 
-    componentWillReceiveProps(nextProps) {
-        // let update = nextProps.appState.update;
-        // if (update.type === 'add' && update.object === 'mesh') {
-        //     let stateMesh = nextProps.appState.meshes.find((mesh) => mesh.id === update.id);
-        //     let geometry = nextProps.appState.geometries.find((geometry) => geometry.id === stateMesh.geometry).geometry;
-        //     let material1 = new THREE.MeshBasicMaterial({
-        //         color: 0xcccccc,
-        //         polygonOffset: true,
-        //         polygonOffsetFactor: 1,
-        //         polygonOffsetUnits: 1
-        //     });
-        //     let mesh = new THREE.Mesh(geometry, material1);
-        //     this.scene.add(mesh);
-        //     let wireframeGeometry = new THREE.EdgesGeometry(mesh.geometry);
-        //     let material2 = new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 1 });
-        //     let wireframe = new THREE.LineSegments(wireframeGeometry, material2);
-        //     mesh.add(wireframe);
-        //     this.renderScene();
-        // }
-    }
-
-    handleResize() {
-        const width = window.innerWidth - 20*12;
-        const height = window.innerHeight - 3*12;
-        this.renderer.setSize(width, height);
-        this.camera.aspect = width / height;
+    onWindowResize() {
+        this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
-        this.renderScene();
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
     }
 
     renderScene() {
@@ -71,19 +65,31 @@ class Renderer extends Component {
 
     animate() {
         this.renderScene();
-        requestAnimationFrame(this.animate);
+        if (this.animating) {
+            requestAnimationFrame(this.animate);
+        }
+    }
+
+    handleClick(e) {
+        this.context.router.history.goBack();
     }
 
     render() {
         return (
-            <div id="renderer" className="renderer">
+            <div className="renderer__wrapper">
+                <div ref="wrapper"></div>
+                <Button onClick={this.handleClick} className="renderer__button">Done</Button>
             </div>
         );
     }
 }
 
 Renderer.propTypes = {
-    appState: PropTypes.object
+    appState3d: PropTypes.object.isRequired
+};
+
+Renderer.contextTypes = {
+    router: PropTypes.object
 };
 
 export default Renderer;
